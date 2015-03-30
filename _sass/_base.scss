@@ -1,0 +1,132 @@
+///////////////////////////////////////////////////////////////////////////////
+// RESPONSIVE LAYOUT DIMENSIONS
+///////////////////////////////////////////////////////////////////////////////
+
+$phone: 640px;
+$tablet: 768px;
+$laptop: 800px;
+
+$desktop-h-margins: 20%;
+$desktop-v-margins: 5%;
+$desktop-header-height: 275px;
+
+$phone-h-margins: 30px;
+$tablet-h-margins: 10%;
+
+$desktop-font-size: 16pt;
+$phone-font-size: 12pt;
+
+///////////////////////////////////////////////////////////////////////////////
+// MIXINS
+///////////////////////////////////////////////////////////////////////////////
+
+// Using media queries with like this:
+// @include media-query($on-palm) {
+//     .wrapper {
+//         padding-right: $spacing-unit / 2;
+//         padding-left: $spacing-unit / 2;
+//     }
+// }
+@mixin media-query($device) {
+    @media screen and (max-width: $device) {
+        @content;
+    }
+}
+
+@mixin reset {
+	margin: 0;
+	border: 0;
+	padding: 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// BASE STYLES
+///////////////////////////////////////////////////////////////////////////////
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	@include source-sans;
+	@include reset;
+
+	width: 100%;
+	height: 100%;
+
+	background-color: $white;
+
+	font-size: $desktop-font-size;
+}
+
+@include media-query($phone) {
+	body {
+		font-size: $phone-font-size;
+	}
+}
+
+a {
+	color: $blue;
+}
+
+h1 {
+	@include playfair-display;
+	@include reset;
+
+	margin-bottom: .65rem;
+
+	font-size: 1.5rem;
+	color: $orange;
+}
+
+h2 {
+	@include playfair-display;
+	@include reset;
+
+	margin-top: 1rem;
+	margin-bottom: .65rem;
+
+	font-size: 1.25rem;
+	color: $dark-blue;
+}
+
+h3 {
+	@include playfair-display;
+	@include reset;
+
+	margin-top: 1rem;
+
+	font-size: 1rem;
+	color: $dark-blue;
+}
+
+h3 a {
+	text-decoration: none;
+	color: $dark-blue;
+}
+
+p {
+	@include reset;
+
+	margin-bottom: .85rem;
+}
+
+.dark-blue {
+	background-color: $dark-blue;
+}
+
+.orange {
+	background-color: $orange;
+}
+
+.light-blue {
+	background-color: $light-blue;
+}
+
+.blue {
+	background-color: $blue;
+}
+
+.green {
+	background-color: $green;
+}
