@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+
+    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700,300italic|Playfair+Display:900,900italic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ "/css/normalize.css" | prepend: site.baseurl }}">
+
+    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl }}">
+
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="site-header" style="background-image: url('{{ page.photo }}')">
+        <div id="palette-row">
+          <div class="palette-row__item dark-blue"></div>
+          <div class="palette-row__item orange"></div>
+          <div class="palette-row__item light-blue"></div>
+          <div class="palette-row__item blue"></div>
+          <div class="palette-row__item green"></div>
+        </div>
+
+        <div id="logo-row">
+          <div class="logo-row__social-buttons">
+            <!--<img src="/assets/img/twitter.png" />
+            <img src="/assets/img/github.png" />-->
+          </div>
+
+          <a href="/"><img class="logo-row__logo" src="/assets/img/logo.png" /></a>
+
+          <div class="logo-row__social-buttons">
+            <a href="https://www.twitter.com/jtompkinsx"><img src="/assets/img/twitter.png" /></a>
+            <a href="https://www.github.com/jtompkins"><img src="/assets/img/github.png" /></a>
+          </div>
+        </div>
+
+        <div id="branding-row">
+          <div class="branding-row__name">
+            <a href="/">Joshua Tompkins</a>
+          </div>
+
+          <div class="branding-row__title">
+            Blog
+          </div>
+        </div>
+      </header>
+
+      {{ content }}
+
+      <div id="disclaimer">
+        Disclaimer: The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+      </div>
+
+      <footer id="site-footer">
+        All content &copy; 2015 Joshua Tompkins except where otherwise noted.
+      </footer>
+    </div>
+  </body>
+</html>

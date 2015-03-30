@@ -1,0 +1,48 @@
+---
+layout: default
+photo: /assets/img/bg.jpeg
+---
+
+<article class="home">
+  <h1>Hi, I'm Josh.</h1>
+
+  <p class="lead">
+    I'm a software engineer, occasional designer, gamer, and Jesus enthusiast living in Gainesville, Florida. I'm currently the Director of Development at <a href="http://www.tradepmr.com">TradePMR</a>, where I lead a team of amazing developers and engineers.
+  </p>
+
+  <p>
+    I've spent most of my career working on the web, and I believe that the web platform offers the best opportunity to positively influence my industry, my peers, and the world. I love the web, and the web has been pretty good to me, too.
+  </p>
+
+  <p>
+    Enough with the work talk. Here's some stuff I like:
+  </p>
+
+  <p>
+    <em>Lord of the Rings</em> is my favorite book. <em>Pride and Prejudice</em> is my second favorite book. My favorite movie is <em>Blade Runner</em>. I like <a href="http://en.wikipedia.org/wiki/Duchesse_de_Bourgogne_(beer)">good beer</a>, <a href="https://www.buffalotracedistillery.com/brands/sazerac-rye">American whiskey</a>, and <a href="http://www.bibledesignblog.com/">Bibles printed with good typography</a>. I have a completely unreasonable love for Apple products. I'm married to an amazing lady and I attend a <a href="http://www.ucgainesville.org/">really cool church</a>.
+  </p>
+
+  <h2>Projects</h2>
+
+  <h3><a href="https://github.com/jtompkins/Haberdasher">Haberdasher</a></h3>
+
+  <p>
+    Haberdasher is a simple .NET Micro-ORM based on <a href="https://github.com/StackExchange/dapper-dot-net">Dapper</a>. Haberdasher writes the boring SQL so you don't have to!
+  </p>
+
+  <h3><a href="https://github.com/jtompkins/willitfreeze">Will it Freeze?</a></h3>
+
+  <p>
+    An experiment in modern Javascript development. Will it freeze where you live tonight?
+  </p>
+
+  <h2>Latest Blog Posts</h2>
+
+  {% for post in site.posts %}
+    <h3>
+      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    </h3>
+
+    {{ post.excerpt }}
+  {% endfor %}
+</article>

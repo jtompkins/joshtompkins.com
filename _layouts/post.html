@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+<article>
+	<header class="article-header">
+  	<h1>{{ page.title }}</h1>
+	</header>
+
+  {{ content }}
+
+  <footer class="article-footer">
+  	<div class="article-footer__location">
+    	<strong>{{ page.date | date: "%B %-d, %Y" }}</strong> from <strong>{{ page.location }}</strong>
+  	</div>
+
+  	<div class="article-footer__credits">
+  		Article photo by <a href="{{ page.photographer-url }}">{{ page.photographer }}</a>
+  	</div>
+  </footer>
+</article>
