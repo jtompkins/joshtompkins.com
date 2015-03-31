@@ -90,7 +90,12 @@ html, body {
 }
 
 a {
+	text-decoration: none;
 	color: $blue;
+
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 h1 {
@@ -126,11 +131,10 @@ h3 {
 	font-size: 1rem;
 	line-height: 145%;
 	color: $dark-blue;
-}
 
-h3 a {
-	text-decoration: none;
-	color: $dark-blue;
+	a {
+		color: $dark-blue;
+	}
 }
 
 p {
