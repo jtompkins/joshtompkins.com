@@ -12,3 +12,6 @@ github_username:  jtompkins
 
 # Build settings
 markdown: kramdown
+permalink: pretty
+gems:
+  - octopress-autoprefixer
