@@ -2,19 +2,18 @@
 // RESPONSIVE LAYOUT DIMENSIONS
 ///////////////////////////////////////////////////////////////////////////////
 
-$phone: 640px;
-$tablet: 768px;
-$laptop: 800px;
-
-$desktop-h-margins: 20%;
-$desktop-v-margins: 5%;
-$desktop-header-height: 275px;
+$phone: 670px;
+$tablet: 1024px;
+$desktop: 1600px;
 
 $phone-h-margins: 30px;
 $tablet-h-margins: 10%;
+$desktop-h-margins: 20%;
+$large-desktop-h-margins: 25%;
 
-$desktop-font-size: 16pt;
 $phone-font-size: 12pt;
+$tablet-font-size: 14pt;
+$desktop-font-size: 16pt;
 
 ///////////////////////////////////////////////////////////////////////////////
 // MIXINS
@@ -40,6 +39,25 @@ $phone-font-size: 12pt;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// TYPOGRAPHY
+///////////////////////////////////////////////////////////////////////////////
+
+@mixin heading-serif {
+	font-family: "freight-display-pro";
+	font-weight: 700;
+}
+
+@mixin body-sans {
+	font-family: "freight-sans-pro";
+	font-weight: 400;
+}
+
+@mixin mono {
+	font-family: "courier-prime";
+	font-weight: 400;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // BASE STYLES
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -48,7 +66,7 @@ $phone-font-size: 12pt;
 }
 
 html, body {
-	@include source-sans;
+	@include body-sans;
 	@include reset;
 
 	width: 100%;
@@ -57,6 +75,12 @@ html, body {
 	background-color: $white;
 
 	font-size: $desktop-font-size;
+}
+
+@include media-query($tablet) {
+	body {
+		font-size: $tablet-font-size;
+	}
 }
 
 @include media-query($phone) {
@@ -70,33 +94,37 @@ a {
 }
 
 h1 {
-	@include playfair-display;
+	@include heading-serif;
 	@include reset;
 
-	margin-bottom: .65rem;
-
-	font-size: 1.5rem;
+	font-size: 2rem;
+	line-height: 145%;
 	color: $orange;
 }
 
+@include media-query($phone) {
+	h1 {
+		margin-bottom: .5rem;
+
+		font-size: 1.5rem;
+	}
+}
+
 h2 {
-	@include playfair-display;
+	@include heading-serif;
 	@include reset;
 
-	margin-top: 1rem;
-	margin-bottom: .65rem;
-
-	font-size: 1.25rem;
+	font-size: 1.5rem;
+	line-height: 145%;
 	color: $dark-blue;
 }
 
 h3 {
-	@include playfair-display;
+	@include heading-serif;
 	@include reset;
 
-	margin-top: 1rem;
-
 	font-size: 1rem;
+	line-height: 145%;
 	color: $dark-blue;
 }
 
@@ -109,6 +137,18 @@ p {
 	@include reset;
 
 	margin-bottom: .85rem;
+}
+
+pre, code {
+	@include mono;
+
+	font-size: 0.875rem;
+}
+
+@include media-query($phone) {
+	pre, code {
+		font-size: 0.75rem;
+	}
 }
 
 .dark-blue {

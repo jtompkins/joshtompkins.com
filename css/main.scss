@@ -4,7 +4,6 @@
 @charset "utf-8";
 
 @import "palette";
-@import "typography";
 @import "base";
 @import "layout";
 @import "syntax-highlighting";
@@ -13,62 +12,50 @@
 // ARTICLE
 ///////////////////////////////////////////////////////////////////////////////
 
-article {
-	padding-top: $desktop-v-margins;
-	padding-left: $desktop-h-margins;
-	padding-right: $desktop-h-margins;
-}
-
-@include media-query($phone) {
-	article {
-		padding-left: $phone-h-margins;
-		padding-right: $phone-h-margins;
-	}
-}
-
-@include media-query($tablet) {
-	article {
-		padding-left: $tablet-h-margins;
-		padding-right: $tablet-h-margins;
-	}
+.home {
+	margin-bottom: 50px;
 }
 
 .home h1 {
-	font-size: 2rem;
-	line-height: 100%;
+	font-size: 2.5rem;
+}
+
+@include media-query($phone) {
+	.home h1 {
+		font-size: 1.75rem;
+	}
 }
 
 .home h2 {
-	margin-top: 1.5rem;
+	margin-bottom: .25rem;
 
-	line-height: 100%;
 	color: $orange;
+}
+
+@include media-query($phone) {
+	.home h2 {
+		font-size: 1.25rem;
+	}
 }
 
 .article-footer {
 	display: flex;
 	justify-content: space-between;
 
-	border-top: 1px solid $green;
-
 	margin-top: 50px;
 	padding-top: 10px;
+	padding-bottom: 10px;
+
+	border-top: 1px solid $green;
 
 	font-size: 0.75rem;
+	color: $green;
 }
 
 @include media-query($phone) {
 	.article-footer {
 		flex-direction: column;
 		justify-content: flex-start;
-
-		margin-top: 20px;
-	}
-}
-
-@include media-query($tablet) {
-	.article-footer {
-		margin-top: 25px;
 	}
 }
 
@@ -92,10 +79,4 @@ article {
 
 	margin-top: 1rem;
 	margin-bottom: 1rem;
-}
-
-.highlight pre, .highlight code {
-	@include source-code;
-
-	font-size: 0.875rem;
 }

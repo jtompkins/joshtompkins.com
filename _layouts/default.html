@@ -10,7 +10,10 @@
 
     <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700,300italic|Playfair+Display:900,900italic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+    <script src="//use.typekit.net/ydc2wea.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ "/css/normalize.css" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
 
@@ -30,24 +33,31 @@
         </div>
 
         <div class="site-header__content">
-          <div id="logo-row">
-            <div class="logo-row__social-buttons"></div>
-
-            <a href="/"><img class="logo-row__logo" src="/assets/img/logo.png" /></a>
-
-            <div class="logo-row__social-buttons">
-              <a href="https://www.twitter.com/jtompkinsx"><img src="/assets/img/twitter.png" /></a>
-              <a href="https://www.github.com/jtompkins"><img src="/assets/img/github.png" /></a>
-            </div>
+          <div class="site-header__logo-row">
+            <a href="/"><img class="logo-row__logo" src="/assets/img/logo@2x.png" /></a>
           </div>
 
-          <div id="branding-row">
+          <div class="site-header__branding-row">
             <div class="branding-row__name">
               <a href="/">Joshua Tompkins</a>
             </div>
 
-            <div class="branding-row__title">
-              Blog
+            <div class="branding-row__social">
+              <div class="branding-row__social__item">
+                <a href="https://www.twitter.com/jtompkinsx"><i class="fa fa-twitter"></i></a>
+              </div>
+
+              <div class="branding-row__social__item">
+                <a href="https://www.github.com/jtompkins"><i class="fa fa-github"></i></a>
+              </div>
+
+              <div class="branding-row__social__item social__item--secondary">
+                <a href="http://www.rdio.com/people/jtompkinsx/"><i class="fa fa-music"></i></a>
+              </div>
+
+              <div class="branding-row__social__item social__item--secondary">
+                <a href="https://www.twitter.com/jtompkinsx"><i class="fa fa-cloud-download"></i></a>
+              </div>
             </div>
           </div>
         </div>
