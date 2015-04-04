@@ -11,7 +11,7 @@ $tablet-h-margins: 10%;
 $desktop-h-margins: 20%;
 $large-desktop-h-margins: 25%;
 
-$phone-font-size: 12pt;
+$phone-font-size: 14pt;
 $tablet-font-size: 14pt;
 $desktop-font-size: 16pt;
 
@@ -119,8 +119,10 @@ h2 {
 	@include heading-serif;
 	@include reset;
 
+	margin-bottom: .25rem;
+
 	font-size: 1.25rem;
-	line-height: 145%;
+	line-height: 115%;
 	color: $dark-blue;
 }
 
@@ -152,6 +154,20 @@ p {
 	font-style: italic;
 }
 
+@include media-query($phone) {
+	.caption {
+		font-size: 0.75rem;
+	}
+}
+
+.highlight {
+	border-top: 1px solid $green;
+	border-bottom: 1px solid $green;
+
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
 pre, code {
 	@include mono;
 
@@ -170,8 +186,8 @@ blockquote {
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 
-	font-size: 0.875rem;
 	font-style: italic;
+	color: $gray;
 }
 
 @include media-query($phone) {
