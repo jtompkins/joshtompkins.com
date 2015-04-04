@@ -43,6 +43,6 @@ photo: /assets/img/bg.jpeg
       <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
     </h3>
 
-    {{ post.excerpt }}
+    {{ post.excerpt | markdownify }}
   {% endfor %}
 </article>
