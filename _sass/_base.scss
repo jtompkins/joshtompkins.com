@@ -143,6 +143,15 @@ p {
 	margin-bottom: .85rem;
 }
 
+.caption {
+	display: block;
+
+	margin-top: -.85rem;
+
+	font-size: 0.875rem;
+	font-style: italic;
+}
+
 pre, code {
 	@include mono;
 
