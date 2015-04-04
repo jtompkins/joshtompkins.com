@@ -102,15 +102,15 @@ h1 {
 	@include heading-serif;
 	@include reset;
 
+	margin-bottom: 1.25rem;
+
 	font-size: 1.75rem;
-	line-height: 145%;
+	line-height: 115%;
 	color: $orange;
 }
 
 @include media-query($phone) {
 	h1 {
-		margin-bottom: .5rem;
-
 		font-size: 1.5rem;
 	}
 }
@@ -119,7 +119,7 @@ h2 {
 	@include heading-serif;
 	@include reset;
 
-	font-size: 1.5rem;
+	font-size: 1.25rem;
 	line-height: 145%;
 	color: $dark-blue;
 }
@@ -147,6 +147,22 @@ pre, code {
 	@include mono;
 
 	font-size: 0.875rem;
+}
+
+blockquote {
+	@include reset;
+
+	border-top: 1px solid $green;
+	border-bottom: 1px solid $green;
+
+	padding-top: 1rem;
+	padding-bottom: .15rem;
+
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+
+	font-size: 0.875rem;
+	font-style: italic;
 }
 
 @include media-query($phone) {

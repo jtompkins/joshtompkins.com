@@ -42,6 +42,8 @@
 
 	padding-left: $large-desktop-h-margins;
 	padding-right: $large-desktop-h-margins;
+
+	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.50) 100%);
 }
 
 @include media-query($desktop) {
@@ -102,11 +104,15 @@
 	padding-right: 5px;
 
 	border-bottom: 5px solid $white;
+
+	color: $orange;
 }
 
 .branding-row__name a {
 	text-decoration: none;
 	color: $white;
+
+	//text-shadow: $black 0 0 20px;
 }
 
 .branding-row__social {
@@ -124,6 +130,7 @@
 	border-bottom: 5px solid $white;
 
 	font-size: 1.15em;
+	//text-shadow: $black 0 0 20px;
 }
 
 .branding-row__social__item a {
