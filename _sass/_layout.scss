@@ -111,8 +111,6 @@
 .branding-row__name a {
 	text-decoration: none;
 	color: $white;
-
-	//text-shadow: $black 0 0 20px;
 }
 
 .branding-row__social {
@@ -121,7 +119,7 @@
 }
 
 .branding-row__social__item {
-	margin-right: 15px;
+	margin-left: 15px;
 
 	padding-bottom: 5px;
 	padding-left: 5px;
@@ -130,7 +128,6 @@
 	border-bottom: 5px solid $white;
 
 	font-size: 1.15em;
-	//text-shadow: $black 0 0 20px;
 }
 
 .branding-row__social__item a {
