@@ -5,7 +5,7 @@ photo: /assets/img/headers/apple-stuff.jpg
 photographer-url: https://unsplash.com/firmbee
 photographer: William Iven
 location: Gainesville, Florida
-excerpt: Wherein I embark on a new learning adventure and, while stroking my ego, very quickly get in over my head.
+excerpt: Wherein I embark on a new learning adventure, and explore the space around status dashboards.
 ---
 
 I spend a lot of time thinking about stagnation.
