@@ -59,7 +59,7 @@ Examples range from the science fictional:
 
 *Image credit: [Panic](http://www.panic.com/blog/the-panic-status-board/)*{: class="caption" }
 
-The canonical example of excellent personal analytics though, has to be [Nicholas Feltron](http://feltron.com/):
+Of course, the canonical example of excellent personal analytics has to be [Nicholas Feltron](http://feltron.com/):
 
 ![Feltron Annual Report I](/assets/img/posts/2015-4-4-an-experiment-in-vanity/FAR12_04.jpg)
 
