@@ -10,193 +10,191 @@ excerpt: A modest request to stop returning f**king null everywhere. A presentat
 
 I *hate* checking for null.
 
-Checking for null makes good code ugly. Unfortunately, *not* checking for null is worse.
+It feels important to start out with that, because avoiding null checks requires discipline and effort. The end result, though, is cleaner, simpler, better looking code.
 
-For years, I didn't check for null. At first, I simply didn't know better. Later, I knew better (or at least, I *thought* I knew better), but still didn't check for null sometimes because I didn't like how it made my code look.
+Fair warning: the solution involves design patterns. Get your astronaut hat ready.
 
-I'd often avoid checking for null in cases where a null value "couldn't happen". This is funny, because null values *always* happen, usually in the places where you were most sure they couldn't.
+!!note - expand on this opening
 
-You can picture the results. My code was full of Null Reference Exceptions. Littered with them.
+## The Revenge of the Void
 
-My boss at the time eventually got so frustrated by my crash-happy code and my unsatisfactory explainations that he made me a poster to help me remember to check for null:
+Failing to check for null is often seen as a beginner's mistake, probably because beginners often make it.
+
+{% highlight c# %}
+
+public class Account {
+    public int Id { get; set;}
+    public string Name { get; set;}
+}
+
+public class AccountRepository {
+    public IEnumerable<Account> GetByIds(IEnumerable<int> ids) {
+        // lots of database code
+    }
+}
+
+var ids = new int[] { 1, 2, 3 };
+
+var accounts = (new AccountRepository()).GetByIds(ids);
+
+for (var account in accounts)
+    Console.WriteLine(account.Name);
+
+{% endhighlight %}
+
+See that code? *All* of my code used to look like that. It's simple, easy to understand, and the intention of the code is obvious. It's good code.
+
+Until, of course, an `Id` gets passed in that doesn't exist in your data source. Then you get an exception. Because we're developers, and programming is terrible, that exception is probably going to happen in production, so enjoy that.
+
+Null references always crop up in situations that "can't happen". Until they happen.
+
+Enough of that and your boss will eventually make you a poster like this:
 
 ![Programming](/assets/img/posts/2015-4-26-stop-returning-null/programming-poster.jpg)
 
-Lesson learned.
-
-Today, potential null references are one of the first things I look for during code reviews. You would be stunned to learn how often they show up, even among experienced programmers who should probably know better.
-
-Why do we avoid checking for null? Because it makes our code look worse.
-
-!!why do we have to check for null everywhere? what's the consequences?
-
-Programming is, at its heart, a form of art. The best programmers are artists, driven to make work that reflects their innate good taste. Littering your code with null checks violates their sensibilities. What's worse, null checks are viral - once they appear in one place in your code, they start to appear *everywhere*.
-
-Imagine you've created the following type:
+So fine. Null checks all around. Eventually, the fear of a null reference in production drives you into a very specific and finely-tuned paranoia. Your code starts to look like this:
 
 {% highlight c# %}
-class Contact {
+
+var ids = new int[] { 1, 2, 3 };
+
+var accounts = (new AccountRepository()).GetByIds(ids);
+
+if (accounts == null)
+    return;
+
+for (var account in accounts) {
+    if (account == null)
+        continue;
+
+    Console.WriteLine(account.Name);
+}
+
+{% endhighlight %}
+
+...and so on.
+
+Here's the thing about putting null checks everywhere in your code: it *feels* like you're writing good code, but you're not. *You're not.*
+
+Null checks are *viral*. They start in one area of the code and eventually leech into all of it. All that extra code has a cost. Eventually you will introduce a bug into code intended to prevent bugs.
+
+I can tell you from experience, recognizing the irony of that fact will not make the feeling of incompetence any better.
+
+What's worse - all these null checks aren't addressing the real problem. They're just treating a symptom, and that symptom is the fact that you're *returning null from things*.
+
+Let's explore some ways to avoid that.
+
+## Suddenly, a Shortage of Nothing
+
+There are three categories of values you'll need to watch out for:
+
+* "Value" types, like `Int32` or `Decimal`, which always have a value,
+* `String`, which is technically a value type but still can potentially be null, and
+* Reference types, like `Object` and its many descendants, all of which can be null.
+
+Value types are easy - they always contain a value and so are safe from null references.
+
+!!note - discuss nullable types
+
+`String` can be null. Here's how you avoid null references when returning `String`s: don't return null. Return `String.Empty` instead. `.Empty` as a constant representation of a non-existent value is important, so keep it in mind. We'll wander back here later.
+
+Reference types can all be null, and it's mostly on their behalf that we're here.
+
+Before we launch into a solution for the null reference problem, it's worth mentioning that there's one class of reference types for which there's an easy fix: `Enumerable<T>`. The .NET framework provides [`Enumerable.Empty`](https://msdn.microsoft.com/en-us/library/vstudio/bb341042(v=vs.100).aspx) which is both simple and an elegant solution to our problem. Friends don't let friends return a null `Enumerable`.
+
+## An Introduction to the Null Object Pattern
+
+The [Null Object Pattern](https://sourcemaking.com/design_patterns/null_object) is, at its heart, about defining a type that represents *nothing*. This sounds more complicated than it is, so let's take a look at some code:
+
+{% highlight c# %}
+
+public class Account {
+    public int Id { get; set;}
     public string Name { get; set;}
-    public string Email { get; set;}
-}
-{% endhighlight %}
-
-Pretty much as simple as it gets. You want to retrieve some `Contact`s from the database. How do you do it? If you've been at this for a while, you might extract data retrieval out into some sort of repository:
-
-{% highlight c# %}
-class ContactRepository {
-    public IEnumerable<Contact> GetAll() {}
-}
-{% endhighlight %}
-
-Your repository returns a list of `Contact`s. Let's say you want to display a list of email addresses. You might write code like this:
-
-{% highlight c# %}
-var repo = new ContactRepository();
-
-var emails = repo.GetAll()
-                 .Select(c => c.Email);
-
-for (var email in emails)
-    Console.WriteLine(email);
-
-{% endhighlight %}
-
-Pretty straightforward, right? What happens if one of the contacts doesn't have an email address? Your code crashes.
-
-Maybe you've been around the block a few times, and you saw the potential NRE right away. You know better than to write code like that, right?
-
-{% highlight c# %}
-var repo = new ContactRepository();
-
-var emails = repo.GetAll()
-                 .Select(c => c.Email);
-
-for (var email in emails) {
-    if (!String.IsNullOrEmpty(email))
-        Console.WriteLine(email);
 }
 
-{% endhighlight %}
-
-There, that's better. Now just remember to do that every time you pull a list of email addresses out of your database, and you'll be safe, right? Of course you'll remember! This isn't your first rodeo.
-
-!!note expand here on why a developer does this
-
-What about the next developer to use this code? What about the developer after that?
-
-The fact is, any code that returns null is dropping a time bomb into your code base. The question isn't *if* it'll go off - the question is *when*.
-
-!!note in here somewhere about how putting null checks into your code *feels* like it's better code, but actually isn't.
-
-### Working around return values that aren't Object
-
-### An introduction to the Null Object Pattern
-
-There's an alternative to littering your code with null checks, or just sticking your head in the sand and hoping for the best. It's called the **[Null Object Pattern](http://en.wikipedia.org/wiki/Null_Object_pattern)**, and it's about to change your life for the better.
-
-!!note here about the relative obscurity of this pattern in C# code and how it's more common in other communities like RUby
-
-As patterns go, this one is relatively simple. What we want is to define a *null object* - a version of a known type that defines sensible defaults and - critically - responds to the same API as the existing type.
-
-It's easy to define a type like this in C#:
-
-{% highlight c# %}
-
-public class EmptyContact : Contact {
-    public EmptyContact() {
+public class EmptyAccount : Account {
+    public Account() {
+        Id = 0;
         Name = String.Empty;
-        Email = String.Empty;
     }
 }
 
 {% endhighlight %}
 
-The exact name of the type is up to you, but I like to stick with the "Empty" convention established by `String.Empty` and `Enumerable.Empty<T>()`.
+That's it. That's the whole pattern. `EmptyAccount` has two characteristics: it defines reasonable (**non-null**) defaults for all of its properties, and, critically, it responds to the **same API** as its parent class, `Account`.
 
-`EmptyContact` extends `Contact`, so it responds to the same API and can be returned from and consumed by any method that expects a `Contact`.
+I like to name my null types `Empty` to match `String.Empty` and `Enumerable.Empty`, but you can call yours anything you want. Because `EmptyAccount` extends `Account`, it'll work in any code that returns or consumes an `Account`.
 
-Now we're back to our original database code:
+With `EmptyAccount` in place, we're back to our original code:
 
 {% highlight c# %}
-var repo = new ContactRepository();
+var ids = new int[] { 1, 2, 3 };
 
-var emails = repo.GetAll()
-                 .Select(c => c.Email);
+var accounts = (new AccountRepository()).GetByIds(ids);
 
-for (var email in emails)
-    Console.WriteLine(email);
+for (var account in accounts)
+    Console.WriteLine(account.Name);
 
 {% endhighlight %}
 
-### Evidence of Absence
+Note the beautiful absence of null checks. Speaking of absence...
 
-What if you need to detect the situation where nothing was returned? That's the most common use of a `null` return value and there will be times when you need to know that nothing came back.
+## Evidence of Absence
 
-The easiest way is to examine the type of your variable:
+There will eventually come a time when you need to know that a *nothing*, rather than a *something*, was returned, and you won't have the crutch of null to rely upon.
+
+The easy way is to examine the type of your variable with `is`:
 
 {% highlight c# %}
-var contact = new EmptyContact();
+var acct = new AccountRepository.Get(id);
 
-if (contact is EmptyContact) {
-    //handle this case here
+if (acct is EmptyAccount) {
+    //...
 }
 
 {% endhighlight %}
 
-As a pattern, this has a an advantage over a basic null check: *it makes your intentions* clear. You're not checking for null to avoid an NRE, you're checking to see if *nothing came back* from your data source.
+This approach has an advantage over a standard null check - it makes your intentions clear. You can encounter a null value for a lot of reasons. Checking for `EmptyAccount` is a check for a specific kind of *nothing*.
 
-Nothing in programming is free, though, and there's a disadvantage here, too: checking the type at runtime with *is* is slower than a simple comparison check.
+Of course, nothing in programming is free. Comparisons against a type are slower than normal object comparisons, so let's explore another approach that uses a simple comparison check.
 
-We can get around this by making a default `EmptyContact` we can compare values against. The easiest way to do this is to make `EmptyContact` a `Singleton`:
+First, make `EmptyAccount` into a [singleton](http://csharpindepth.com/articles/general/singleton.aspx), and then expose the single instance of `EmptyAccount` through a static property on `Account:`
 
 {% highlight c# %}
 //singleton code here
 {% endhighlight %}
 
-Once you've ensured that there will only ever be one `EmptyContact`, simply return the singleton whenever you need to. For consistency with other objects in the .NET framework, we can create a `.Empty` static property on `Contact` for easy access to the `EmptyContact` singleton:
+Once this structure is established, returning an `EmptyAccount` is as easy as returning `Account.Empty`. As a bonus, accessing our null object is now consistent with other empty constants in the framework.
+
+Checking for the absence of a value is now straightforward:
 
 {% highlight c# %}
-//empty property on contact
+// comparing against Account.Empty
 {% endhighlight %}
 
-Once this structure is established, code that consumes your `Contact` type doesn't necessarily have to know about `EmptyContact` any more. All references can come through the `Contact.Empty` accessor.
+The default equality implementation in C# for Object is a reference comparison. Since there's only one instance of `EmptyAccount`, comparing two references to `Account.Empty` will always evaluate to `true`.
 
-{% highlight c# %}
-//sample equals checking code here
-{% endhighlight %}
-
-!!note here explaining the default equality check in C# for objects and how all of this works
-
-There's a trap lurking here, though - what if `Contact` overrides `.Equals` and `==`?
+There is one potential problem lurking here - if the parent type overrides `.Equals`, comparisons to your empty singleton can become unreliable.
 
 {% highlight c# %}
 //equality overrides here
 {% endhighlight %}
 
-In the example above, the equality operator has been overriden to check the value of `.Name`. Contacts with the same name are considered the same contact.
+It's probably best to avoid the singleton approach if you're working in an environment that routinely overrides equality for your types. You should probably also try to avoid environments that override equality, but that's just one man's opinion.
 
-In this case, any `Contact` with an empty `Name` property would be considered equal to `EmptyContact`, which obviously presents a problem.
-
-If you're writing code with objects that tend to override `Equals`, you should probably stick to `is` when checking for `EmptyContact`.
-
-Before we move on: you might be thinking of trying to get around this problem by overriding `Equals` on `EmptyContact`:
+You might be thinking at this point that you can just override the equality comparison on your null type, perhaps by enforcing a reference check:
 
 {% highlight c# %}
 //overriding equals on emptycontact
 {% endhighlight %}
 
-This is one of those solutions that seems good on the surface, but in reality can introduce subtle, hard-to-reproduce bugs into your code. In this case, overriding `Equals` suddenly makes the ordering of the arguments to `==` matter:
+This solution might seem good on the surface, but in practice it will introduce subtle, hard-to-reproduce bugs into your code, mostly because it will make the order of the arguments in an equality comparison suddenly matter:
 
 {% highlight c# %}
-
-var contact = new Contact();
-var empty = Contact.Empty();
-
-Console.WriteLine(empty == contact); //false
-Console.WriteLine(contact == empty); //true!
+//equality comparisons that aren't
 {% endhighlight %}
 
-Don't do this.
+Seriously, don't do this. Down this path lies madness.
 
-Using the Null Object Pattern can make your code safer, simpler, and more intentional. Use it often!
+!!note - come up with a closing paragraph
