@@ -50,7 +50,7 @@ Enjoy that.
 
 Novice developers often argue that they don't have to check for null, because reaching the null value execution path "can't happen". Say that enough and your boss will eventually make you a poster like this:
 
-![Programming](/assets/img/posts/2015-4-26-stop-returning-null/programming-poster.jpg)
+![Programming](/assets/img/posts/2015-5-1-stop-returning-null/programming-poster.jpg)
 
 (I know because that poster is mine.)
 
@@ -259,12 +259,10 @@ Seriously, don't do this. Down this path lies madness.
 
 Now you know how to avoid returning null, and, of course, knowing is half the battle.
 
-![LASERS](/assets/img/posts/2015-4-26-stop-returning-null/knowing.jpg)
+![LASERS](/assets/img/posts/2015-5-1-stop-returning-null/knowing-is-half-the-battle.jpg)
 
 (The other half is lasers.)
 
 What you do now is up to you, but remember this: every avoided NRE makes the world a better place.
 
 You want to make the world a better place, right?
-
-You can avoid returning null.
