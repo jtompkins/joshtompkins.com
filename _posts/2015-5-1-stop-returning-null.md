@@ -159,7 +159,17 @@ This approach has an advantage over a standard null check - it makes your intent
 
 Of course, nothing in programming is free. Comparisons against a type are (slightly) slower than normal object comparisons, so let's explore another approach that uses a simple comparison check.
 
-First, make `EmptyAccount` into a [singleton](http://csharpindepth.com/articles/general/singleton.aspx), and then expose the single instance of `EmptyAccount` through a static property on `Account:`
+A comparison requires an instance of an `EmptyAccount`:
+
+{% highlight C# %}
+//let's assume that there's no id "-1"
+var account = (new AccountRepository()).GetById(-1);
+var empty = new EmptyAccount();
+
+return account == empty; //true
+{% endhighlight %}
+
+You might notice that since the constructor sets default values for all of `EmptyAccount`'s properties, every instance will be the same. If that's the case, there's no reason to ever have more than once instance of `EmptyAccount` in memory. One way to do that is to implement the [singleton pattern](http://csharpindepth.com/articles/general/singleton.aspx) for `EmptyAccount`:
 
 {% highlight c# %}
 public class EmptyAccount : Account {
@@ -184,7 +194,20 @@ public class EmptyAccount : Account {
 
     //...
 }
+{% endhighlight %}
 
+Now you can compare against the single instance of `EmptyAccount`:
+
+{% highlight C# %}
+//let's assume that there's no id "-1"
+var account = (new AccountRepository()).GetById(-1);
+
+return account == EmptyAccount.Empty; //true
+{% endhighlight %}
+
+To be consistent with other "empty" representations in .NET, you can also expose the singleton as a property on `Account` itself:
+
+{% highlight c# %}
 public class Account {
     public static Account Empty {
         get {
@@ -196,15 +219,12 @@ public class Account {
 }
 {% endhighlight %}
 
-Once this structure is established, returning an `EmptyAccount` is as easy as returning `Account.Empty`. As a bonus, accessing our null object is now consistent with other empty constants in the .NET framework.
-
-Checking for the absence of a value is now straightforward:
 
 {% highlight c# %}
-var id = -1; //let's assume that there's no id "-1"
-var acct = (new AccountRepository()).GetById(id);
+//let's assume that there's no id "-1"
+var account = (new AccountRepository()).GetById(-1);
 
-return acct == AccountEmpty; // true
+return acct == Account.Empty; // true
 {% endhighlight %}
 
 The default equality implementation in C# for `Object` is a reference comparison. Since there's only one instance of `EmptyAccount`, comparing two references to `Account.Empty` will always evaluate to `true`.
@@ -264,3 +284,5 @@ Now you know how to avoid returning null, and, of course, knowing is half the ba
 What you do now is up to you, but remember this: every avoided NRE makes the world a better place.
 
 You want to make the world a better place, right?
+
+*This post was inspired by [Nothing is Something](https://www.youtube.com/watch?v=9lv2lBq6x4A), a talk by the great [Sandi Metz](http://www.sandimetz.com/). Thank you to Sam Julien, Jared Pinchot, and Kris Vitt for reviewing the content, and to Malena Summers for reviewing the style and tone.*
