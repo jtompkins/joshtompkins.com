@@ -219,6 +219,7 @@ public class Account {
 }
 {% endhighlight %}
 
+Once this structure is established, returning an `EmptyAccount` is as easy as returning `Account.Empty`. As a bonus, you can now handle an empty value without having to interact directly with `EmptyAccount`, thus hiding the details of its implementation from consumers of `Account`:
 
 {% highlight c# %}
 //let's assume that there's no id "-1"
