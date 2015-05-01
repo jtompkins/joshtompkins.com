@@ -12,7 +12,7 @@ I *hate* checking for null.
 
 Null checks make code worse, not better. They're like fire ants - they show up everywhere, and once you start seeing them, they're basically impossible to fully remove.
 
-The good news is that you can write code that doesn't check for null and **is still safe from null reference errors**. It just takes discipline, a little extra code, and the will to make it happen.
+The good news is that you can write C# code that doesn't check for null and **is still safe from null reference errors**. It just takes discipline, a little extra code, and the will to make it happen.
 
 Fair warning: banishing null checks from your code involves design patterns. Get your [astronaut hat](http://www.joelonsoftware.com/articles/fog0000000018.html) ready.
 
@@ -54,7 +54,7 @@ Novice developers often argue that they don't have to check for null, because re
 
 (I know because that poster is mine.)
 
-Eventually, you learn your lession. The fear of a null reference in production drives you into a very specific and finely-tuned brand of paranoia. Your code starts to look like this:
+Eventually, you learn your lesson. The fear of a null reference in production drives you into a very specific and finely-tuned brand of paranoia. Your code starts to look like this:
 
 {% highlight c# %}
 
@@ -92,9 +92,9 @@ Let's explore some ways to avoid that.
 
 There are three categories of values you'll need to watch out for:
 
-* "Value" types, like `Int32` or `Decimal`, which always have a value,
-* `String`, which is technically a value type but still can potentially be null, and
-* Reference types, like `Object` and its many descendants, all of which can be null.
+* Value types, like `Int32` or `Decimal`
+* `String`, which is technically a value type but still can potentially be null
+* Reference types, like `Object` and its many descendants
 
 Value types are easy - they always contain a value and so are safe from null references.
 
@@ -102,7 +102,7 @@ Value types are easy - they always contain a value and so are safe from null ref
 
 Reference types can *all* be null, and it's mostly on their behalf that we're here.
 
-Before we launch into a solution for the null reference problem, it's worth mentioning that there's one class of reference types for which there's an easy way to avoid returning null values: `Enumerable<T>`. The .NET framework provides [`Enumerable.Empty`](https://msdn.microsoft.com/en-us/library/vstudio/bb341042(v=vs.100).aspx) which is both simple and an elegant solution to our problem. Friends don't let friends return a null `Enumerable`.
+It's worth mentioning that there's one class of reference type for which there's an easy way to avoid returning null values: `Enumerable<T>`. The .NET framework provides [`Enumerable.Empty`](https://msdn.microsoft.com/en-us/library/vstudio/bb341042(v=vs.100).aspx), which returns an empty list, neatly avoiding the null problem.
 
 ## An Introduction to the Null Object Pattern
 
@@ -146,7 +146,7 @@ Note the beautiful absence of null checks. Speaking of absence...
 
 There will eventually come a time when you need to know that a *nothing*, rather than a *something*, was returned, and you won't have the crutch of null to rely upon.
 
-The easiest way to identify an empty value is to examine the type of your variable with `is`:
+The easiest way to identify an empty value is to examine the type of your variable with the C# keyword `is`:
 
 {% highlight c# %}
 var acct = new AccountRepository.Get(id);
@@ -159,7 +159,7 @@ if (acct is EmptyAccount) {
 
 This approach has an advantage over a standard null check - it makes your intentions clear. You can encounter a null value for a lot of reasons. Checking for `EmptyAccount` is a check for a specific kind of *nothing*.
 
-Of course, nothing in programming is free. Comparisons against a type are slower than normal object comparisons, so let's explore another approach that uses a simple comparison check.
+Of course, nothing in programming is free. Comparisons against a type are (slightly) slower than normal object comparisons, so let's explore another approach that uses a simple comparison check.
 
 First, make `EmptyAccount` into a [singleton](http://csharpindepth.com/articles/general/singleton.aspx), and then expose the single instance of `EmptyAccount` through a static property on `Account:`
 
@@ -244,7 +244,7 @@ public class EmptyAccount {
 }
 {% endhighlight %}
 
-This solution might seem good on the surface, but in practice it will introduce subtle, hard-to-reproduce bugs into your code, mostly because it will make the order of the arguments in an equality comparison suddenly matter:
+This solution might seem good on the surface, but in practice it will introduce subtle, hard-to-reproduce bugs into your code, since the order of the arguments in an equality comparison suddenly matter:
 
 {% highlight c# %}
 var acct = new Account();
