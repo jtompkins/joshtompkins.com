@@ -62,7 +62,7 @@ var ids = new int[] { 1, 2, 3 };
 
 var accounts = (new AccountRepository()).GetByIds(ids);
 
-if (accounts == null)(new AccountRepository()).GetByIds(ids);
+if (accounts == null)
     return;
 
 for (var account in accounts) {
