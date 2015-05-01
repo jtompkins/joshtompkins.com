@@ -44,7 +44,7 @@ for (var account in accounts)
 
 See that code? *All* of my code used to look like that. It's simple, easy to understand, and the intention of the code is obvious. It has all of the *characteristics* of good code - but in reality, it's a time bomb waiting to explode.
 
-The good news is, you're a developer, and programming is terrible, so when it does explode, it's probably going to do it in production.
+The good news is that you're a developer, and the odds are *never* [in your favor](https://www.youtube.com/watch?v=_s7qgNMqDJI), so when (not if) this bomb explodes, it's probably going to do it in production.
 
 Enjoy that.
 
