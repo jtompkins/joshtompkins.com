@@ -76,7 +76,7 @@ for (var account in accounts) {
 
 ...and so on.
 
-Here's the thing about putting null checks everywhere in your code: it *feels* like you're writing good code, but you're not. *You're not.**
+Here's the thing about putting null checks everywhere in your code: it *feels* like you're writing good code, but you're not. **You're not.**
 
 Stop and let that sink in for a minute.
 
