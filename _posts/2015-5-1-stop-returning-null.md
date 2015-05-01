@@ -78,8 +78,6 @@ for (var account in accounts) {
 
 Here's the thing about putting null checks everywhere in your code: it *feels* like you're writing good code, but you're not. **You're not.**
 
-Stop and let that sink in for a minute.
-
 Null checks are *viral*. They start in one area of the code and eventually leech into all of it. All that extra code has a cost. Eventually you will introduce a bug into code intended to prevent bugs.
 
 I can tell you from experience, recognizing the irony of that fact will not make the feeling of incompetence you'll have any easier to tolerate.
