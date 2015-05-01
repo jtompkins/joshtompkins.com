@@ -219,7 +219,7 @@ public class Account {
 }
 {% endhighlight %}
 
-Once this structure is established, returning an `EmptyAccount` is as easy as returning `Account.Empty`. As a bonus, you can now handle an empty value without having to interact directly with `EmptyAccount`, thus hiding the details of its implementation from consumers of `Account`:
+Once this structure is established, returning an `EmptyAccount` is as easy as returning `Account.Empty`. As a bonus, you can now handle an empty value without having to interact directly with `EmptyAccount`, hiding the details of its implementation from consumers of `Account`:
 
 {% highlight c# %}
 //let's assume that there's no id "-1"
@@ -286,4 +286,4 @@ What you do now is up to you, but remember this: every avoided NRE makes the wor
 
 You want to make the world a better place, right?
 
-*This post was inspired by [Nothing is Something](https://www.youtube.com/watch?v=9lv2lBq6x4A), a talk by the great [Sandi Metz](http://www.sandimetz.com/). Thank you to Sam Julien, Jared Pinchot, and Kris Vitt for reviewing the content, and to Malena Summers for reviewing the style and tone.*
+*This post was inspired by [Nothing is Something](https://www.youtube.com/watch?v=9lv2lBq6x4A), a talk by the great [Sandi Metz](http://www.sandimetz.com/). Thank you to [Sam Julien](https://twitter.com/samjulien), [Jared Pinchot](https://twitter.com/mildsauce45), and [Kris Vitt](https://twitter.com/thevitt) for reviewing the content, and to Malena Summers for reviewing the style and tone.*
