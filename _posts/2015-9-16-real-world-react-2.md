@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "Flux from the Ground Up, Part 1: Project Setup"
+title:  "Real World React & Flux, Part 2: Project Setup"
 photo: /assets/img/headers/fire-sky.jpg
 photographer-url: https://unsplash.com/brenomachado
 photographer: Breno Machado
 location: Gainesville, Florida
-excerpt: Starting a new Javascript project is harder than you might think.
+excerpt: Thousands of words and not a single line of project code.
 ---
 
 Lately I've been experimenting with React. I really like it - it's a completely different approach to building an application than the MVC/MVVM methodology that dominates modern Javascript development.
