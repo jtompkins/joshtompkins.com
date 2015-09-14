@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Real-World React & Flux, Part 1: Introduction"
+title:  "Real-World React, Part 1: Introduction"
 photo: /assets/img/headers/fire-sky.jpg
 photographer-url: https://unsplash.com/brenomachado
 photographer: Breno Machado
@@ -44,6 +44,8 @@ Oh, and at TradePMR we like to give our projects code names (because it's [not t
 
 To build this application, I'm going to try to pull together a bunch of packages that represent the current state-of-the-art in React tooling (for this week, anyway):
 
+### ES6 & Babel
+
 ### Webpack
 
 Even for the Javascript ecosystem, [Webpack](http://webpack.github.io) seems to have transitioned from relative obscurity to explosive popularity in record time. Webpack calls itself a Javascript *module bundler* - essentially, it's a piece of software that can package up all of the dependencies of a typical application - Javascript code, CSS, even images and fonts - and then expose them as modules that can be combined together and used in interesting ways. Thanks to a pluggable architecture, Webpack can also handle some duties usually delgated to a task runner, like compiling ES6 code, processing and minifying CSS, or optimizing images. I've found that while Webpack can do a lot, getting started is actually pretty easy, though the documentation is a little spotty.
@@ -60,5 +62,5 @@ Even for the Javascript ecosystem, [Webpack](http://webpack.github.io) seems to 
 
 [Mocha](http://mochajs.org) is a Javascript testing framework. I'm chosing it for a couple of reasons - it's well documented, it has excellent support for tests written in ES6 (via the [Babel transpiler](https://babeljs.io)), and I like that Mocha allows me to choose my own assertion library. For this project, I'm going to use [Should](https://shouldjs.github.io), mostly because I like the English-like assertion syntax.
 
-I've never used Redux, ImmutableJS, Webpack, or Mocha before, so this should be pretty interesting project. In the [next post](2015/09/16/real-world-react-2/), I'll be walking through project setup, which is really much more involved than it probably should be. I hope you'll join me there!
+I've never used Redux, ImmutableJS, Webpack, or Mocha before, so this should be a pretty interesting project. In the [next post](/2015/09/16/real-world-react-2/), I'll be walking through project setup, which is really much more involved than it probably should be. I hope you'll join me there!
 
