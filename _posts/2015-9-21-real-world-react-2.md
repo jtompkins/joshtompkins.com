@@ -10,7 +10,7 @@ excerpt: Thousands of words and not a single line of project code.
 
 *This post is part of a series on **Real-World React & Flux**.*
 
-In my [last post](), I outlined the goals of this project, code-named *Millhopper*. In this post, we're going to start building up the project structure and configuring all of the tooling.
+In my [last post](/2015/09/19/real-world-react-1/), I outlined the goals of this project, code-named *Millhopper*. In this post, we're going to start building up the project structure and configuring all of the tooling.
 
 ## Installing dependencies
 
@@ -30,7 +30,7 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | b
 
 *This is probably a good time to note that a lot of Javascript tools don't have graphical interfaces, so if you're not comfortable working from the command line, now would be a good time to do some extracurricular reading.*
 
-Installing NVM doesn't actually install Node, so let's do that next. The current stable version of Node is 4.0, so we'll install that:
+Installing NVM doesn't actually install Node, so let's do that next. The current stable version of Node is 4.1.0, so we'll install that:
 
 {% highlight bash %}
 nvm install stable
@@ -61,13 +61,13 @@ mkdir millhopper
 git init
 {% endhighlight %}
 
-Eventually, Millhopper is goign to have a bunch of project-specific dependencies. Let's make pulling them down easier by having NPM create a `project.json` file:
+Eventually, Millhopper is going to have a bunch of project-specific dependencies. Let's make pulling them down easier by having NPM create a `project.json` file:
 
 {% highlight bash %}
 npm init
 {% endhighlight %}
 
-`project.json` is used for a lot of things: defining metadata about the project, listing dependencies, and making scripts to build and test the project, among other things. Running `npm init` ensures that the file is created correctly. If you're not sure about the answers to some of the questions NPM asks (I wasn't), just accept the defaults - they're fine for this project.
+`project.json` is used for a lot of things, like defining metadata about the project, listing dependencies, and making scripts to build and test the project. Running `npm init` ensures that the file is created correctly. If you're not sure about the answers to some of the questions NPM asks (I wasn't), just accept the defaults - they're fine for this project.
 
 Now we're ready to start layout out the project files. The best way to structure a Javascript project is something of an open question. I'm not sure if there really is a "best" way, and I haven't been able to find any clear consensus out there.
 
@@ -81,7 +81,7 @@ Lacking any authoritative guidance, here's how we're going to lay out Millhopper
 
 At this point, the project directory should look like this:
 
-![Project Structure](/assets/img/posts/2015-9-16-real-world-react-2/project-structure.png)
+![Project Structure](/assets/img/posts/2015-9-21-real-world-react-2/project-structure.png)
 
 ## Configuring Webpack
 
@@ -373,13 +373,13 @@ Run the test with the `mocha` command. It should pass.
 
 If you're running [iTerm2](https://www.iterm2.com) on OS X with the popular [Solarized Dark](http://ethanschoonover.com/solarized) theme installed, you might notice something strange - the description of the test doesn't show up in the Mocha output:
 
-![Missing Descriptions](/assets/img/posts/2015-9-16-real-world-react-2/iterm2.png)
+![Missing Descriptions](/assets/img/posts/2015-9-21-real-world-react-2/iterm2.png)
 
 That's happening because Mocha outputs the test description in a non-standard terminal color that's the same color as the Solarized Dark background - or very close to it. There's some debate over whether this is a [Solarized bug or a Mocha bug](https://github.com/mochajs/mocha/issues/802).
 
 It's fixable by either switching themes (I've found the [Tomorrow Night Eighties](https://github.com/chriskempson/tomorrow-theme) theme works well), or increasing the contrast in iTerm2's settings:
 
-![Increasing Contrast](/assets/img/posts/2015-9-16-real-world-react-2/iterm2-settings.png)
+![Increasing Contrast](/assets/img/posts/2015-9-21-real-world-react-2/iterm2-settings.png)
 
 ### Dealing with ES6 (again)
 
@@ -393,7 +393,7 @@ npm install babel --save-dev
 
 {% endhighlight %}
 
-If you were wondering - this is a different dependency from the `babel-loader` we installed earlier. `babel-loader` uses Babel under the covers, but it doesn't expose to other packages, so we have to install Babel ourselves.
+If you were wondering - this is a different dependency from the `babel-loader` we installed earlier. `babel-loader` uses Babel under the covers, but it doesn't expose the transpiler to other packages, so we have to install Babel ourselves.
 
 Now we can launch Mocha, specifying that we want to use the Babel transpiler:
 
